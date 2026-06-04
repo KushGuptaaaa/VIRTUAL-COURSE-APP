@@ -10,7 +10,7 @@ export const createCourse = async (req, res) => {
         }
         const course = await Course.create({
              title,
-            description,
+            category,
             
             creator: req.userId
             // req.userId is coming from isAuth middleware, jisme humne user ki id ko req.userId me store kiya hai, to yaha pe hum course ke creator field me req.userId ko store karenge, taki hume pata chale ki ye course kisne create kiya hai

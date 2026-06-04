@@ -14,11 +14,16 @@ import { Navigate , useNavigate } from 'react-router-dom';
 import Dashboard from './pages/Educator/Dashboard.jsx'
 import Courses from './pages/Educator/Courses.jsx'
 import CreateCourses from './pages/Educator/CreateCourses.jsx'
+import EditCourse from './pages/Educator/EditCourses.jsx'
+
+
+import useGetCreatorCourse from './customHooks/useGetCreatorCourse.js'
 
 
 export const serverUrl = "http://localhost:8000"
 function App() {
     useGetCurrentUser();
+    useGetCreatorCourse();
     const {userData} = useSelector((state) => state.user);
     const navigate = useNavigate();
   return (
@@ -39,6 +44,8 @@ function App() {
         <Route path = "/courses" element={userData?.role === "educator" ? <Courses /> : <Navigate to={"/signup"} /> } />
 
         <Route path = "/createcourse" element={userData?.role === "educator" ? <CreateCourses /> : <Navigate to={"/signup"} /> } />
+
+        <Route path = "/editcourse/:curseId" element={userData?.role === "educator" ? <EditCourse /> : <Navigate to={"/signup"} /> } />
 
 
     </Routes>

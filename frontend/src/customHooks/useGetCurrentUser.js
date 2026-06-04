@@ -25,3 +25,19 @@ const useGetCurrentUser = () => {
 };
 
 export default useGetCurrentUser
+
+
+
+// Bhai iska main kaam hai:
+
+// 👉 Jab user website reload kare ya direct URL open kare, tab logged-in user ka data wapas Redux me laana.
+
+// Example:
+
+// User login karta hai ✅
+// User data Redux me save ho jata hai ✅
+// Ab page refresh kar diya ❌
+
+// Refresh ke baad Redux ka sara data clear ho jata hai.
+
+// Tab ye hook:
