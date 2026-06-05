@@ -13,6 +13,7 @@ const courseSlice = createSlice({
         },
         setCourseData:(state,action)=>{
             state.courseData = action.payload
+            //published course ka data ayega
         },
         setSelectedCourse:(state,action)=>{
             state.selectedCourse = action.payload
