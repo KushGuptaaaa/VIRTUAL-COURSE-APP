@@ -20,6 +20,9 @@ import AllCourses from './pages/AllCourses.jsx'
 
 import useGetCreatorCourse from './customHooks/useGetCreatorCourse.js'
 import useGetPublishedCourse from './customHooks/useGetPublishedCourse.js'
+import CreateLecture from './pages/Educator/CreateLecture.jsx'
+import EditLecture from './pages/Educator/EditLecture.jsx'
+import ViewCourse from './pages/ViewCourse.jsx'
 
 
 export const serverUrl = "http://localhost:8000"
@@ -53,6 +56,11 @@ function App() {
         <Route path = "/editcourse/:courseId" element={userData?.role === "educator" ? <EditCourse /> : <Navigate to={"/signup"} /> } />
         {/* //Dynamic Data v pass hua hai courseId variable me store ho jaega taki ... const {courseId} = useParams() kare to courseId jo enter kia wo mil jae */}
 
+        <Route path = "/createlecture/:courseId" element={userData?.role === "educator" ? <CreateLecture /> : <Navigate to={"/signup"} /> } />
+
+        <Route path = "/editlecture/:courseId/:lectureId" element={userData?.role === "educator" ? <EditLecture/> : <Navigate to={"/signup"} /> } />
+
+        <Route path = "/viewcourse/:courseId" element={userData?.role === "educator" ? <ViewCourse/> : <Navigate to={"/signup"} /> } />
 
     </Routes>
     </>

@@ -1,5 +1,6 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Course from "../models/courseModel.js";
+import Lecture from "../models/lectureModel.js";
 
 
 export const createCourse = async (req, res) => {
@@ -116,15 +117,18 @@ export const createLecture = async (req,res) => {
        if(course){
         course.lectures.push(lecture._id)
        }
+       // taki course me course me sare lectures store ho jae
        await course.populate("lectures")
        await course.save()
        return res.status(201).json({lecture , course})
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message:`failed to create Lecture ${error}`})
     }
 }
 
+// get lectures thorough courses ,// Course ki details aur uske saare lectures frontend ko bhejta hai , populate() existing course object ko modify kar deta hai.
 export const getCourseLecture = async (req,res) => {
     try {
         const {courseId} = req.params
@@ -140,7 +144,7 @@ export const getCourseLecture = async (req,res) => {
     } catch (error) {
          return res.status(500).json({message:`failed to getCourseLecture ${error}`})
     }
-}
+} 
 
 export const editLecture = async (req,res) => {
     try {

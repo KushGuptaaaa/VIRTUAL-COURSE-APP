@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setCourseData } from '../redux/courseSlice'
 const useGetPublishedCourse = () => {
 const dispatch = useDispatch()
+const {userData} = useSelector(state => state.user)
+
     useEffect(()=>{
        const getCourseData = async () => {
         try {
@@ -18,7 +20,7 @@ const dispatch = useDispatch()
         
         }
        getCourseData()
-    },[])
+    },[userData])
 
 }
 
