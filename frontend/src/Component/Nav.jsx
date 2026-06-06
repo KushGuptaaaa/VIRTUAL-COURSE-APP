@@ -53,10 +53,30 @@ function Nav() {
                             </div>
                     )}
 
-                    {userData?.role === "educator" && <div className='px-[20px] py-[10px] border-2 border-white  text-white bg-[black]  rounded-[10px] text-[18px] font-light cursor-pointer' onClick={() => navigate("/dashboard")}>Dashboard</div>}
-                    {!userData ? <span className='px-[20px] py-[10px] border-2 border-white text-white rounded-[10px] text-[18px] font-light cursor-pointer bg-[#000000d5]' onClick={() => navigate("/login")}>Login</span> :
-                        <span className='px-[20px] py-[10px] bg-white text-black rounded-[10px] shadow-sm shadow-black text-[18px] cursor-pointer' onClick={handleLogOut}>LogOut</span>}
+                    {userData?.role === "educator" && (
+                    <div
+                        className="px-4 py-2 border border-white/30 bg-black/80 text-white rounded-lg text-base cursor-pointer transition-all duration-300 hover:scale-105 hover:border-cyan-400 hover:text-cyan-400"
+                        onClick={() => navigate("/dashboard")}
+                    >
+                        Dashboard
+                    </div>
+                    )}
 
+                    {!userData ? (
+                    <span
+                        className="px-4 py-2 border border-white/30 bg-black/80 text-white rounded-lg text-base cursor-pointer transition-all duration-300 hover:scale-105 hover:border-cyan-400 hover:text-cyan-400"
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </span>
+                    ) : (
+                    <span
+                        className="px-4 py-2 bg-white text-black rounded-lg text-base cursor-pointer transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-purple-600 hover:to-cyan-500 hover:text-white"
+                        onClick={handleLogOut}
+                    >
+                        LogOut
+                    </span>
+                    )}
 
                     {show && (
                         <div className='absolute top-[110%] right-[15%] flex flex-col gap-2 bg-white px-3 py-3 rounded-2xl shadow-2xl border border-gray-100 z-50 min-w-[200px] animate-in fade-in duration-400'>

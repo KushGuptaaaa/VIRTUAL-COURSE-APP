@@ -51,13 +51,14 @@ export const getCreatedCourses = async (req, res) => {
 
 export const editCourse = async (req, res) => {
     try {
-        const courseId = req.params.id;
-        const { title, subTitle, description, category, price, level , isPublished , } = req.body;
+        const {courseId} = req.params;
+        const { title, subTitle, description, category, level, isPublished ,price} = req.body;
+        let thumbnail
         if(req.file){
-            const thumbnail = await uploadOnCloudinary(req.file.path);
+            thumbnail = await uploadOnCloudinary(req.file.path);
             // agar thumbnail update karna hai, to pehle course ko find karna padega, taki hume uska thumbnail url mil jaye, aur us url ko delete kar sake,            
         }
-        const course = await Course.findById(courseId);
+        let course = await Course.findById(courseId);
 
         if(!course) {
             return res.status(404).json({ message: "Course not found" });
@@ -67,7 +68,7 @@ export const editCourse = async (req, res) => {
         course = await Course.findByIdAndUpdate(courseId, updateData, { new: true });
         return res.status(200).json(course);
     } catch (error) {
-        return res.status(500).json({ message: `Error editing course: ${error.message}` });
+        return res.status(500).json({ message: `Error editing course: ${error}` });
     } 
 };
 

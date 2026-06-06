@@ -7,3 +7,5 @@ export const store = configureStore({
     course: courseSlice,
   },
 })
+
+

@@ -16,7 +16,9 @@ function Courses() {
     const dispatch = useDispatch()
     const {userData} = useSelector(state=>state.user)
     const {creatorCourseData} = useSelector(state=>state.course)
-     useEffect(()=>{
+    
+    //is code ke karan koi v update delete hoga course data me to is page me turat update ho jaega kyuki useEffect use hua hai ,aur ye redux state me bhi update ho rhi hai to course page me turat show karega
+    useEffect(()=>{
        const creatorCourses = async () => {
         try {
             const result = await axios.get(serverUrl + "/api/course/getcreator" , {withCredentials:true})

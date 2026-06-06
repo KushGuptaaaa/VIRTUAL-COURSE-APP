@@ -15,15 +15,18 @@ import Dashboard from './pages/Educator/Dashboard.jsx'
 import Courses from './pages/Educator/Courses.jsx'
 import CreateCourses from './pages/Educator/CreateCourses.jsx'
 import EditCourse from './pages/Educator/EditCourses.jsx'
+import AllCourses from './pages/AllCourses.jsx'
 
 
 import useGetCreatorCourse from './customHooks/useGetCreatorCourse.js'
+import useGetPublishedCourse from './customHooks/useGetPublishedCourse.js'
 
 
 export const serverUrl = "http://localhost:8000"
 function App() {
     useGetCurrentUser();
     useGetCreatorCourse();
+    useGetPublishedCourse();
     const {userData} = useSelector((state) => state.user);
     const navigate = useNavigate();
   return (
@@ -39,13 +42,16 @@ function App() {
 
         <Route path = "/editprofile" element={userData ? <EditProfile /> : <Navigate to={"/signup"} /> } />
 
+        <Route path='/allcourses' element={userData ? <AllCourses/> :<Navigate to={"/signup"}/>}/>
+
         <Route path = "/dashboard" element={userData?.role === "educator" ? <Dashboard /> : <Navigate to={"/signup"} /> } />
 
         <Route path = "/courses" element={userData?.role === "educator" ? <Courses /> : <Navigate to={"/signup"} /> } />
 
         <Route path = "/createcourse" element={userData?.role === "educator" ? <CreateCourses /> : <Navigate to={"/signup"} /> } />
 
-        <Route path = "/editcourse/:curseId" element={userData?.role === "educator" ? <EditCourse /> : <Navigate to={"/signup"} /> } />
+        <Route path = "/editcourse/:courseId" element={userData?.role === "educator" ? <EditCourse /> : <Navigate to={"/signup"} /> } />
+        {/* //Dynamic Data v pass hua hai courseId variable me store ho jaega taki ... const {courseId} = useParams() kare to courseId jo enter kia wo mil jae */}
 
 
     </Routes>

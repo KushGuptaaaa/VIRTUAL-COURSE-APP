@@ -83,13 +83,15 @@ function EditCourse() {
       const updateData = result.data
       if(updateData.isPublished){
         const updateCourses = courseData.map(c => c._id === courseId ? updateData : c)
-
+        //jo courseId edit hone ke liye aya hai uska courseData ko update karo redux me taki edited wala ka state bhi change ho
         if(!courseData.some(c=> c._id === courseId))
         {
           updateCourses.push(updateData)
         }
         dispatch(setCourseData(updateCourses))
       }
+        // Edit ke baad published courses ki Redux state update karo:
+        // published ho to add/update karo, unpublished ho to remove karo.
       else{
         const filterCourses = courseData.filter(c => c._id !== courseId)
         dispatch(setCourseData(filterCourses))
@@ -109,6 +111,7 @@ function EditCourse() {
       const result = await axios.delete(serverUrl + `/api/course/remove/${courseId}` , {withCredentials:true})
       console.log(result.data)
       const filterCourses = courseData.filter(c => c._id !== courseId)
+      //matlab yah redux me jo deleted hai usko nhi dalenge redux me
       dispatch(setCourseData(filterCourses))
       setLoading1(false)
       toast.success("Course Removed")
