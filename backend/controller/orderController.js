@@ -18,16 +18,18 @@ export const RazorpayOrder = async (req,res) => {
         if(!course){
             return res.status(404).json({message:"Course is not found"})
         }
-        const options={
-            amount:course.price*100,
-            currency:'INR',
-            receipt:`${courseId}.toString()`
-        } 
+        const options = {
+            amount: Math.round((course.price || 1) * 100), // agar price null ho toh ₹1 default
+            currency: 'INR',
+            receipt: courseId.toString() // yeh bhi fix kiya, pehle string template galat tha
+        }
 
         const order = await RazorPayInstance.orders.create(options)
         return res.status(200).json(order)
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message:`Failed to create Razorpay Order ${error}`})
+        
     }
 }
 

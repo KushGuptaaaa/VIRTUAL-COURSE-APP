@@ -6,8 +6,12 @@ import ai from "/ai.png"
 import ai1 from "/searchAi.png"
 import Logos from '../Component/Logos';
 import ExploreCourses from '../Component/ExploreCourses';
+import About from '../Component/About';
+import Footer from '../Component/Footer';
+import ReviewPage from '../Component/ReviewPage'; 
 import CardPage from '../Component/CardPage';
 import { useNavigate } from 'react-router-dom';
+
 
 const Home = () => {
     const navigate = useNavigate()
@@ -163,6 +167,9 @@ const Home = () => {
      <Logos/>
      <ExploreCourses/>
      <CardPage/>
+     <About/>
+     <Footer/>
+     <ReviewPage/>
     </div>
   )
 }

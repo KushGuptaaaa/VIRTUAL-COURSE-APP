@@ -58,6 +58,7 @@ function ViewCourse() {
 
     const handleEnroll = async (userId, courseId) => {
         try {
+            
             const orderData = await axios.post(serverUrl + "/api/order/razorpay-order", {userId, courseId}, {withCredentials:true})
             const options = {
                 key: import.meta.env.VITE_RAZORPAY_KEY_ID,
@@ -81,6 +82,7 @@ function ViewCourse() {
             const rzp = new window.Razorpay(options)
             rzp.open()
         } catch (error) {
+            console.log(error)
             toast.error("Something went wrong while enrolling.")
         }
     }

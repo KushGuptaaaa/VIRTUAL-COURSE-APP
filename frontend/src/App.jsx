@@ -25,6 +25,8 @@ import EditLecture from './pages/Educator/EditLecture.jsx'
 import ViewCourse from './pages/ViewCourse.jsx'
 import ScrollToTop from './Component/ScrollToTop.jsx'
 import ViewLectures from './pages/ViewLectures.jsx'
+import MyEnrolledCourses from './pages/MyEnrolledCourses.jsx'
+import useGetAllReviews from './customHooks/useGetAllReviews.js'
 
 
 export const serverUrl = "http://localhost:8000"
@@ -32,6 +34,7 @@ function App() {
     useGetCurrentUser();
     useGetCreatorCourse();
     useGetPublishedCourse();
+    useGetAllReviews
     const {userData} = useSelector((state) => state.user);
     const navigate = useNavigate();
   return (
@@ -63,10 +66,12 @@ function App() {
 
         <Route path = "/editlecture/:courseId/:lectureId" element={userData?.role === "educator" ? <EditLecture/> : <Navigate to={"/signup"} /> } />
 
-        <Route path = "/viewcourse/:courseId" element={userData?.role === "educator" ? <ViewCourse/> : <Navigate to={"/signup"} /> } />
+        <Route path = "/viewcourse/:courseId" element={userData ? <ViewCourse/> : <Navigate to={"/signup"} /> } />
 
 
-        <Route path = "/viewlecture/:courseId" element={userData?.role === "educator" ? <ViewLectures/> : <Navigate to={"/signup"} /> } />
+        <Route path = "/viewlecture/:courseId" element={userData ? <ViewLectures/> : <Navigate to={"/signup"} /> } />
+
+        <Route path = "/mycourses" element={userData ? <MyEnrolledCourses/> : <Navigate to={"/signup"} /> } />
 
     </Routes>
     </>

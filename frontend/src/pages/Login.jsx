@@ -14,6 +14,7 @@ import { setUserData } from '../redux/userSlice.js';
 import forget from "./ForgetPassword"
 import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../utils/firebase.js'
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 
 
@@ -68,11 +69,14 @@ const googleLogin = async () => {
 
 
   return (
-        <div className="bg-gray-100 w-screen h-screen flex items-center justify-center">
-            <form className='w-[900%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex' onSubmit={(e) => {
+        <div className="bg-gray-100 w-screen h-screen flex items-center justify-center ">
+        
+            <form className='w-[900%] md:w-200 h-150 bg-[white] shadow-xl rounded-2xl flex relative' onSubmit={(e) => {
                 e.preventDefault();
                 handleLogin();
             }}>
+                    <FaArrowLeftLong className='absolute top-[3%] md:top-[6%] left-[5%] w-[22px] h-[22px] cursor-pointer' onClick={()=>navigate("/")}/>
+                
                 {/* left div */}
                 <div className='w-[50%] h-full flex flex-col items-center justify-center'>
     

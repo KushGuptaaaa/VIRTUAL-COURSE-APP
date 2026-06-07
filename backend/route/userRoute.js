@@ -12,6 +12,8 @@ userRouter.get("/getcurrentuser", isAuth , getCurrentUser)
 
 userRouter.post("/profile", isAuth , upload.single("photoUrl"), updateProfile)
 
+
+
 // upload.single("photoUrl") multer middleware hai
 // frontend se aayi "photoUrl" file ko receive karta hai
 // uploaded file ko req.file me store karta hai
