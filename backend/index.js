@@ -6,6 +6,7 @@ import authRoute from "./route/authRoute.js";
 import cors from "cors";
 import userRouter from "./route/userRoute.js";
 import courseRouter from "./route/courseRoute.js";
+import paymentRouter from "./route/paymentRoute.js";
 
 dotenv.config();
 console.log(process.env.MONGO_URI);
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/user", userRouter) // jitne bhi userRoute hai unke age /api/user lag jayega
 
 app.use("/api/course" , courseRouter)
+app.use("/api/order", paymentRouter)
 
 
 app.get("/", (req, res) => {
