@@ -29,7 +29,7 @@ app.use("/api/user", userRouter) // jitne bhi userRoute hai unke age /api/user l
 
 app.use("/api/course" , courseRouter)
 app.use("/api/order", paymentRouter)
-app.use("/api/riview", reviewRouter)
+app.use("/api/review", reviewRouter)
 
 
 app.get("/", (req, res) => {

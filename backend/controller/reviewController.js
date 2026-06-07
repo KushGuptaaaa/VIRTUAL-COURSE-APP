@@ -28,6 +28,7 @@ export const createReview = async (req,res) => {
 
         return res.status(201).json(review)
     } catch (error) {
+         console.log(error)
          return res.status(500).json({message:`Failed to create review ${error}`})
     }
 }

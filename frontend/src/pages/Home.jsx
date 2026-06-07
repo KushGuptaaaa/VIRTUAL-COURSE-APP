@@ -168,8 +168,9 @@ const Home = () => {
      <ExploreCourses/>
      <CardPage/>
      <About/>
+      <ReviewPage/>
      <Footer/>
-     <ReviewPage/>
+    
     </div>
   )
 }
