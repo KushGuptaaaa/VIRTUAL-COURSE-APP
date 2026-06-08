@@ -11,7 +11,7 @@ import { FaLock } from "react-icons/fa";
 import { useState } from 'react';
 import axios from 'axios';
 import { serverUrl } from '../App';
-import Card from '../component/Card';
+import Card from '../Component/Card';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
 

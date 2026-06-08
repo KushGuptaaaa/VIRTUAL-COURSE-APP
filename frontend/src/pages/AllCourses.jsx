@@ -1,12 +1,12 @@
 import React from 'react'
-import Nav from '../component/Nav'
+import Nav from '../Component/Nav'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import ai from "/searchAi.png"
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Card from '../component/Card';
+import Card from '../Component/Card';
 function AllCourses() {
     const navigate = useNavigate()
     const {courseData} = useSelector(state=>state.course)
