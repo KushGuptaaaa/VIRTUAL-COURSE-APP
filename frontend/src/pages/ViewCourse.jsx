@@ -172,6 +172,14 @@ function ViewCourse() {
                   Watch Now →
                 </button>
             }
+            {isEnrolled && (
+                <button
+                    onClick={() => navigate(`/chat/${userData._id}_${selectedCourse?.creator?._id}`)}
+                    className='w-full md:w-fit bg-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-all duration-200'
+                >
+                    💬 Chat with Educator
+                </button>
+            )}
           </div>
         </div>
 

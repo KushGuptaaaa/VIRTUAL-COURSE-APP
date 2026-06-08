@@ -8,14 +8,25 @@ import userRouter from "./route/userRoute.js";
 import courseRouter from "./route/courseRoute.js";
 import paymentRouter from "./route/paymentRoute.js";
 import reviewRouter from "./route/reviewRoute.js";
+import chatRouter from "./route/chatRoute.js";          // add
+import { createServer } from "http";                    // add
+import { Server } from "socket.io";                    // add
+import progressRouter from "./route/progressRoute.js"
+
+
 
 dotenv.config();
-console.log(process.env.MONGO_URI);
 
 const port = process.env.PORT;
 const app = express();
+const server = createServer(app);                      // add
+const io = new Server(server, {                        // add
+  cors: {
+    origin: "http://localhost:5173",
+    credentials: true,
+  }
+});
 
-// cors sabse pahle hona  chahiye  
 app.use(cors({
   origin: "http://localhost:5173",
   credentials: true,
@@ -24,19 +35,38 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
-// jitne bhi authROute hai unke age /api/auth lag jayega
-app.use("/api/user", userRouter) // jitne bhi userRoute hai unke age /api/user lag jayega
-
-app.use("/api/course" , courseRouter)
+app.use("/api/user", userRouter)
+app.use("/api/course", courseRouter)
 app.use("/api/order", paymentRouter)
 app.use("/api/review", reviewRouter)
+app.use("/api/chat", chatRouter)                       // add
+app.use("/api/progress", progressRouter)
+
 
 
 app.get("/", (req, res) => {
   res.send("Hello from server");
 });
 
-app.listen(port, () => {
+// Socket.io
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id)
+
+  socket.on("joinRoom", (roomId) => {
+    socket.join(roomId)
+    console.log(`Joined room: ${roomId}`)
+  })
+
+  socket.on("sendMessage", (data) => {
+    io.to(data.roomId).emit("receiveMessage", data)
+  })
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected")
+  })
+})
+
+server.listen(port, () => {                            // app.listen → server.listen
   console.log("Server Started");
   connectDb();
 });

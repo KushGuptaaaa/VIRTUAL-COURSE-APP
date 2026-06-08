@@ -28,6 +28,8 @@ import ViewLectures from './pages/ViewLectures.jsx'
 import MyEnrolledCourses from './pages/MyEnrolledCourses.jsx'
 import useGetAllReviews from './customHooks/useGetAllReviews.js'
 import SearchWithAi from './pages/SearchWithAi.jsx'
+import Chat from './pages/Chat.jsx'
+import ChatList from './pages/ChatList.jsx'
 
 
 export const serverUrl = "http://localhost:8000"
@@ -75,6 +77,10 @@ function App() {
         <Route path = "/mycourses" element={userData ? <MyEnrolledCourses/> : <Navigate to={"/signup"} /> } />
 
         <Route path='/search' element={userData ? <SearchWithAi/> :<Navigate to={"/signup"}/>}/>
+
+        <Route path="/chat/:roomId" element={userData ? <Chat /> : <Navigate to={"/login"} />} />
+
+        <Route path="/chatlist" element={userData?.role === "educator" ? <ChatList /> : <Navigate to={"/"} />} />
 
     </Routes>
     </>

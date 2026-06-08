@@ -1,6 +1,7 @@
 import uploadOnCloudinary from "../config/cloudinary.js";
 import Course from "../models/courseModel.js";
 import Lecture from "../models/lectureModel.js";
+import User from "../models/userModel.js"
 
 
 export const createCourse = async (req, res) => {
@@ -41,8 +42,8 @@ export const getPublishedCourses = async (req, res) => { try {
 export const getCreatedCourses = async (req, res) => {
     try {
         const userId = req.userId; // Ye userId isAuth middleware se aayega, jisme humne user ki id ko req.userId me store kiya hai
-        const courses = await Course.find({ creator: userId })
-        
+        const courses = await Course.find({creator:userId}).populate("enrolledStudents", "name email photoUrl")
+        .populate("lectures")
         if(!courses) {
             return res.status(404).json({ message: "No created courses found" });
         }
