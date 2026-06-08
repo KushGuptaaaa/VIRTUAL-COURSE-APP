@@ -30,6 +30,7 @@ import useGetAllReviews from './customHooks/useGetAllReviews.js'
 import SearchWithAi from './pages/SearchWithAi.jsx'
 import Chat from './pages/Chat.jsx'
 import ChatList from './pages/ChatList.jsx'
+import Certificate from './pages/Certificate.jsx'
 
 
 export const serverUrl = "http://localhost:8000"
@@ -81,6 +82,9 @@ function App() {
         <Route path="/chat/:roomId" element={userData ? <Chat /> : <Navigate to={"/login"} />} />
 
         <Route path="/chatlist" element={userData?.role === "educator" ? <ChatList /> : <Navigate to={"/"} />} />
+
+        <Route path="/certificate/:courseId" element={userData ? <Certificate /> : <Navigate to={"/login"} />} />
+
 
     </Routes>
     </>
