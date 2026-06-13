@@ -22,13 +22,13 @@ const app = express();
 const server = createServer(app);                      // add
 const io = new Server(server, {                        // add
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://virtual-course-app-1.onrender.com",
     credentials: true,
   }
 });
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://virtual-course-app-1.onrender.com",
   credentials: true,
 }))
 
