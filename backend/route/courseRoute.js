@@ -2,6 +2,7 @@ import express from "express"
 import { createCourse, createLecture, editCourse, editLecture, getCourseById, getCourseLecture, getCreatorById, getCreatorCourses, getPublishedCourses, removeCourse, removeLecture } from "../controller/courseController.js"
 import isAuth from "../middleware/isAuth.js"
 import upload from "../middleware/multer.js"
+import { generateRoadmap } from "../controller/courseController.js"
 import { searchWithAi } from "../controller/searchController.js"
 
 const courseRouter = express.Router()
@@ -23,4 +24,6 @@ courseRouter.post("/creator",isAuth,getCreatorById)
 
 // for Search 
 courseRouter.post("/search",searchWithAi)
+
+courseRouter.post("/roadmap", isAuth, generateRoadmap)
 export default courseRouter

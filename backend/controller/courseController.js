@@ -2,6 +2,7 @@ import uploadOnCloudinary from "../config/cloudinary.js";
 import Course from "../models/courseModel.js";
 import Lecture from "../models/lectureModel.js";
 import User from "../models/userModel.js"
+import { GoogleGenAI } from "@google/genai"
 
 
 export const createCourse = async (req, res) => {
@@ -227,4 +228,76 @@ export const getCreatorById = async (req,res) => {
         return res.status(500).json({message:`Failed to get Creator ${error}`})
     }
     
+}
+
+
+export const generateRoadmap = async (req, res) => {
+    try {
+        const { goal } = req.body
+        if (!goal) {
+            return res.status(400).json({ message: "Goal is required" })
+        }
+
+        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
+
+        const prompt = `You are a learning path expert. Generate a structured roadmap for someone who wants to become a ${goal}.
+
+Return ONLY valid JSON in this exact format:
+{
+  "title": "roadmap title",
+  "steps": [
+    {
+      "step": 1,
+      "topic": "topic name",
+      "duration": "X weeks",
+      "description": "one line description",
+      "keywords": ["keyword1", "keyword2"]
+    }
+  ]
+}
+
+Rules:
+- Exactly 6-7 steps
+- Keep it practical and beginner friendly
+- keywords should match course categories like Web Development, AI/ML, Data Science, UI UX Designing, App Development
+- No extra text, only JSON`
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+        })
+
+        const text = response.text.trim()
+            .replace(/```json/g, '')
+            .replace(/```/g, '')
+            .trim()
+
+        const roadmap = JSON.parse(text)
+
+        // Related courses dhundo har step ke liye
+        const stepsWithCourses = await Promise.all(
+            roadmap.steps.map(async (step) => {
+                const courses = await Course.find({
+                    isPublished: true,
+                    $or: step.keywords.map(k => ({
+                        $or: [
+                            { title: { $regex: k, $options: 'i' } },
+                            { category: { $regex: k, $options: 'i' } },
+                        ]
+                    })).flat()
+                }).limit(2).select('title thumbnail price _id category')
+
+                return { ...step, courses }
+            })
+        )
+
+        return res.status(200).json({
+            title: roadmap.title,
+            steps: stepsWithCourses
+        })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: `Failed to generate roadmap ${error}` })
+    }
 }

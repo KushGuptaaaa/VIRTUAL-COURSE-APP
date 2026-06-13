@@ -2,7 +2,8 @@ import React, { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FaArrowLeftLong } from "react-icons/fa6"
-import html2canvas from 'html2canvas'
+import domtoimage from 'dom-to-image'
+
 import jsPDF from 'jspdf'
 
 function Certificate() {
@@ -15,13 +16,25 @@ function Certificate() {
     const course = courseData?.find(c => c._id === courseId)
     const date = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
 
-    const handleDownload = async () => {
-        const canvas = await html2canvas(certificateRef.current, { scale: 2 })
-        const imgData = canvas.toDataURL('image/png')
-        const pdf = new jsPDF('landscape', 'mm', 'a4')
-        pdf.addImage(imgData, 'PNG', 0, 0, 297, 210)
-        pdf.save(`${userData?.name}-${course?.title}-certificate.pdf`)
-    }
+const handleDownload = async () => {
+    const node = certificateRef.current
+    const scale = 2
+
+    const blob = await domtoimage.toPng(node, {
+        width: node.clientWidth * scale,
+        height: node.clientHeight * scale,
+        style: {
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+            width: node.clientWidth + 'px',
+            height: node.clientHeight + 'px',
+        }
+    })
+
+    const pdf = new jsPDF('landscape', 'mm', 'a4')
+    pdf.addImage(blob, 'PNG', 0, 0, 297, 210)
+    pdf.save(`${userData?.name}-${course?.title}-certificate.pdf`)
+}
 
     return (
         <div className='min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4'>

@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/vite": "^4.3.0",
     "axios": "^1.16.1",
+    "dom-to-image": "^2.6.0",
     "firebase": "^12.14.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
