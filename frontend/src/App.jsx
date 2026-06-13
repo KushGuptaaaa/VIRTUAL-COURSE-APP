@@ -33,7 +33,7 @@ import ChatList from './pages/ChatList.jsx'
 import Certificate from './pages/Certificate.jsx'
 
 
-export const serverUrl = "http://localhost:8000"
+export const serverUrl = "https://virtual-course-app.onrender.com"
 function App() {
     useGetCurrentUser();
     useGetCreatorCourse();
